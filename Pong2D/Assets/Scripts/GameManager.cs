@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [Header("AudioSource")]
     public AudioSource beep;
     public AudioSource goal;
+    public AudioSource bg;
 
     [Header("Color")]
     public Color yellow;
@@ -55,6 +56,7 @@ public class GameManager : MonoBehaviour
                 subText.text = " "; //Subtext is blank
                 subText.color = Color.white; //Change color
                 Won = false; // Won is false
+                bg.Play(); //Play background music
                 StartCoroutine(CountDown());
             }
 
@@ -128,11 +130,13 @@ public class GameManager : MonoBehaviour
             mainText.color = yellow; //Change text color
             subText.text = "[SHIFT] TO RESTART"; //Change subtext
             subText.color = yellow; //Change subtext color
+            bg.Stop(); //Stop background music
         } else if (RScore >= 3) {
             mainText.text = "PURPLE WINS"; //Change text
             mainText.color = purple; //Change text color
             subText.text = "[SHIFT] TO RESTART"; // Change subtext
             subText.color = purple; //Change subtext color
+            bg.Stop(); //Stop background music
         }
     }
 }

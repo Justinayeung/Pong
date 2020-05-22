@@ -1327,10 +1327,12 @@ MonoBehaviour:
   beep: {fileID: 1152904652}
   goal: {fileID: 607988283}
   bg: {fileID: 390445945}
-  victory: {fileID: 1611544158}
+  victoryMusic: {fileID: 8300000, guid: cee21fec597e959439bdad2e3234c102, type: 3}
   yellow: {r: 1, g: 0.7058824, b: 0, a: 1}
   purple: {r: 0.7058824, g: 0, b: 1, a: 1}
   Won: 0
+  once: 0
+  victory: 0
 --- !u!4 &558642021
 Transform:
   m_ObjectHideFlags: 0
@@ -3072,7 +3074,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: cee21fec597e959439bdad2e3234c102, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0

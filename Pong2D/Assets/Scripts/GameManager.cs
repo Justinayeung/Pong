@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public AudioSource beep;
     public AudioSource goal;
     public AudioSource bg;
-    public AudioSource victory;
+    public AudioSource victoryMusic;
 
     [Header("Color")]
     public Color yellow;
@@ -35,14 +35,19 @@ public class GameManager : MonoBehaviour
 
     public bool Won;
     public bool once;
+    public bool victory;
+    public bool played;
 
     private int LScore;
     private int RScore;
 
     // Start is called before the first frame update
     void Start() {
+        Cursor.visible = false;
         Won = false;
         once = false;
+        victory = false;
+        played = false;
         LScore = 0;
         RScore = 0;
         mainText.color = Color.white;
@@ -52,6 +57,10 @@ public class GameManager : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
+        if (Input.GetKeyDown(KeyCode.Escape)) { //Quit Application
+            Application.Quit();
+        }
+
         if (!once) {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 mainText.color = Color.white; //Change color
@@ -71,6 +80,13 @@ public class GameManager : MonoBehaviour
         }
 
         WinCondition();
+
+        //Victory music condition (Play audio once)
+        if (victory && !played) {
+            victoryMusic.Play();
+            victory = false;
+            played = true;
+        }
     }
 
     /// <summary>
@@ -137,22 +153,14 @@ public class GameManager : MonoBehaviour
             subText.text = "SHIFT TO RESTART"; //Change subtext
             subText.color = yellow; //Change subtext color
             bg.Stop(); //Stop background music
-            bool played = false;
-            if (!played) {
-                victory.Play(); //Play victory music
-                played = true;
-            }
+            victory = true;
         } else if (RScore >= 3) {
             mainText.text = "PURPLE WINS"; //Change text
             mainText.color = purple; //Change text color
             subText.text = "SHIFT TO RESTART"; // Change subtext
             subText.color = purple; //Change subtext color
-            bg.Stop(); //Stop background music
-            bool played = false;
-            if (!played) {
-                victory.Play(); //Play victory music
-                played = true;
-            }
+            bg.Stop(); //Stop background music   
+            victory = true;
         }
     }
 }

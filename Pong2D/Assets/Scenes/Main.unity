@@ -1198,6 +1198,7 @@ MonoBehaviour:
   mainText: {fileID: 1953696791}
   subText: {fileID: 495121205}
   beep: {fileID: 1152904652}
+  goal: {fileID: 607988283}
 --- !u!4 &558642021
 Transform:
   m_ObjectHideFlags: 0

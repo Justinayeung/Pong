@@ -8,9 +8,11 @@ public class BallScript : MonoBehaviour
 
     private float speed;
     private Rigidbody2D rb;
+    private Vector3 startPos;
 
     // Start is called before the first frame update
     void Start(){
+        startPos = transform.position; //Get original position
         rb = GetComponent<Rigidbody2D>(); //Reference to rigidbody2D
     }
 
@@ -34,5 +36,13 @@ public class BallScript : MonoBehaviour
             bounce.pitch = Random.Range(0.65f, 1.15f); //Random audio pitch
             bounce.Play(); //Play audio
         }
+    }
+
+    /// <summary>
+    /// Reset ball to original starting point
+    /// </summary>
+    public void ResetBall() {
+        rb.velocity = Vector2.zero;
+        transform.position = startPos;
     }
 }

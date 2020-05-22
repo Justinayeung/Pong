@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     [Header("AudioSource")]
     public AudioSource beep;
+    public AudioSource goal;
 
     private int LScore;
     private int RScore;
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     IEnumerator CountDown() {
+        ResetPositions();
         mainText.text = "3"; //Change text
         beep.Play(); //play beep audio
         yield return new WaitForSeconds(1f); //Wait for one second
@@ -69,9 +71,11 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Add to Paddle L's score
     /// </summary>
-    public void ScorePL() {
-        LScore++; //Add to score 
-        L_Score.text = RScore.ToString(); //Change text
+    public void ScorePL()
+    {
+        goal.Play(); //play goal audio
+        LScore++; //Add to score
+        L_Score.text = LScore.ToString(); //Change text
         StartCoroutine(CountDown()); //Restart countdown
     }
 
@@ -79,9 +83,18 @@ public class GameManager : MonoBehaviour
     /// Add to Paddle R's score
     /// </summary>
     public void ScorePR() {
+        goal.Play(); //play goal audio
         RScore++; //Add to score
         R_Score.text = RScore.ToString(); //Change text
         StartCoroutine(CountDown()); //Restart countdown
     }
 
+    /// <summary>
+    /// Reset game to original positions and restart countdown
+    /// </summary>
+    public void ResetPositions() {
+        ball.GetComponent<BallScript>().ResetBall(); //Reset ball position
+        PaddleL.GetComponent<PlayerScript>().ResetPaddle(); //Reset paddleL position
+        PaddleR.GetComponent<PlayerScript>().ResetPaddle(); //Reset paddleR position
+    }
 }

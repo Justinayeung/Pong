@@ -27,43 +27,49 @@ public class GameManager : MonoBehaviour
     public AudioSource beep;
     public AudioSource goal;
     public AudioSource bg;
+    public AudioSource victory;
 
     [Header("Color")]
     public Color yellow;
     public Color purple;
 
     public bool Won;
+    public bool once;
 
     private int LScore;
     private int RScore;
 
     // Start is called before the first frame update
     void Start() {
-        Won = true;
+        Won = false;
+        once = false;
         LScore = 0;
         RScore = 0;
         mainText.color = Color.white;
         subText.color = Color.white;
-        subText.text = "[SPACE] TO START";
+        subText.text = "SPACE TO START";
     }
 
     // Update is called once per frame
     void Update(){
-        if (Won) {
+        if (!once) {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 mainText.color = Color.white; //Change color
                 mainText.text = " "; //Main text is blank
                 subText.text = " "; //Subtext is blank
                 subText.color = Color.white; //Change color
-                Won = false; // Won is false
+                once = true; // Won is false
                 bg.Play(); //Play background music
                 StartCoroutine(CountDown());
             }
+        }
 
+        if (Won) {
             if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name); //Restart scene
             }
         }
+
         WinCondition();
     }
 
@@ -128,15 +134,25 @@ public class GameManager : MonoBehaviour
         if (LScore >= 3) { //Win Text
             mainText.text = "YELLOW WINS"; //Change text
             mainText.color = yellow; //Change text color
-            subText.text = "[SHIFT] TO RESTART"; //Change subtext
+            subText.text = "SHIFT TO RESTART"; //Change subtext
             subText.color = yellow; //Change subtext color
             bg.Stop(); //Stop background music
+            bool played = false;
+            if (!played) {
+                victory.Play(); //Play victory music
+                played = true;
+            }
         } else if (RScore >= 3) {
             mainText.text = "PURPLE WINS"; //Change text
             mainText.color = purple; //Change text color
-            subText.text = "[SHIFT] TO RESTART"; // Change subtext
+            subText.text = "SHIFT TO RESTART"; // Change subtext
             subText.color = purple; //Change subtext color
             bg.Stop(); //Stop background music
+            bool played = false;
+            if (!played) {
+                victory.Play(); //Play victory music
+                played = true;
+            }
         }
     }
 }

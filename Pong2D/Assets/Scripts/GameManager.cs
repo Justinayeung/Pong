@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public Color purple;
 
     public bool Won;
+    public bool over2;
     public bool once;
     public bool victory;
     public bool played;
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
     void Start() {
         Cursor.visible = false;
         Won = false;
+        over2 = false;
         once = false;
         victory = false;
         played = false;
@@ -67,7 +69,7 @@ public class GameManager : MonoBehaviour
                 mainText.text = " "; //Main text is blank
                 subText.text = " "; //Subtext is blank
                 subText.color = Color.white; //Change color
-                once = true; // Won is false
+                once = true; // once is true
                 bg.Play(); //Play background music
                 StartCoroutine(CountDown());
             }
@@ -94,7 +96,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     IEnumerator CountDown() {
-        if (!Won) { //If win condition is not met
+        if (!over2) { //If win condition is not met
             ResetPositions();
             mainText.text = "3"; //Change text
             beep.Play(); //play beep audio
@@ -142,12 +144,13 @@ public class GameManager : MonoBehaviour
 
     public void WinCondition() {
         if (LScore >= 2) { //Checking if score is greater than 2
-            Won = true; //Set win to true
+            over2 = true; //Set win to true
         } else if (RScore >= 2) {
-            Won = true; //Set win to true
+            over2 = true; //Set win to true
         }
 
         if (LScore >= 3) { //Win Text
+            Won = true;
             mainText.text = "YELLOW WINS"; //Change text
             mainText.color = yellow; //Change text color
             subText.text = "SHIFT TO RESTART"; //Change subtext
@@ -155,6 +158,7 @@ public class GameManager : MonoBehaviour
             bg.Stop(); //Stop background music
             victory = true;
         } else if (RScore >= 3) {
+            Won = true;
             mainText.text = "PURPLE WINS"; //Change text
             mainText.color = purple; //Change text color
             subText.text = "SHIFT TO RESTART"; // Change subtext

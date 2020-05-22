@@ -925,7 +925,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: SUB
+  m_Text: 
 --- !u!222 &495121206
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1199,6 +1199,9 @@ MonoBehaviour:
   subText: {fileID: 495121205}
   beep: {fileID: 1152904652}
   goal: {fileID: 607988283}
+  yellow: {r: 1, g: 0.7058824, b: 0, a: 1}
+  purple: {r: 0.7058824, g: 0, b: 1, a: 1}
+  Won: 0
 --- !u!4 &558642021
 Transform:
   m_ObjectHideFlags: 0
@@ -2844,7 +2847,7 @@ GameObject:
   - component: {fileID: 1551311641}
   - component: {fileID: 1551311643}
   - component: {fileID: 1551311642}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Score R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2883,7 +2886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7058824, g: 0, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3319,7 +3322,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: MAIN
+  m_Text: 
 --- !u!222 &1953696792
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3339,7 +3342,7 @@ GameObject:
   - component: {fileID: 2033422508}
   - component: {fileID: 2033422510}
   - component: {fileID: 2033422509}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Score L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3378,7 +3381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.7058824, b: 0, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:

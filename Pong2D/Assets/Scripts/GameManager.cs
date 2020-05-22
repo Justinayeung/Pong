@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,11 +27,18 @@ public class GameManager : MonoBehaviour
     public AudioSource beep;
     public AudioSource goal;
 
+    [Header("Color")]
+    public Color yellow;
+    public Color purple;
+
+    public bool Won;
+
     private int LScore;
     private int RScore;
 
     // Start is called before the first frame update
     void Start() {
+        Won = true;
         LScore = 0;
         RScore = 0;
         mainText.color = Color.white;
@@ -39,14 +47,22 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            mainText.color = Color.white; //Change color
-            mainText.text = " "; //Main text is blank
-            subText.text = " "; //Subtext is blank
-            subText.color = Color.white; //Change color
-            StartCoroutine(CountDown());
+    void Update(){
+        if (Won) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                mainText.color = Color.white; //Change color
+                mainText.text = " "; //Main text is blank
+                subText.text = " "; //Subtext is blank
+                subText.color = Color.white; //Change color
+                Won = false; // Won is false
+                StartCoroutine(CountDown());
+            }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name); //Restart scene
+            }
         }
+        WinCondition();
     }
 
     /// <summary>
@@ -54,18 +70,20 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     IEnumerator CountDown() {
-        ResetPositions();
-        mainText.text = "3"; //Change text
-        beep.Play(); //play beep audio
-        yield return new WaitForSeconds(1f); //Wait for one second
-        mainText.text = "2";
-        beep.Play();
-        yield return new WaitForSeconds(1f);
-        mainText.text = "1";
-        beep.Play();
-        yield return new WaitForSeconds(1f);
-        mainText.text = " ";
-        ball.GetComponent<BallScript>().RandomDirection(); //Send ball in random direction
+        if (!Won) { //If win condition is not met
+            ResetPositions();
+            mainText.text = "3"; //Change text
+            beep.Play(); //play beep audio
+            yield return new WaitForSeconds(1f); //Wait for one second
+            mainText.text = "2";
+            beep.Play();
+            yield return new WaitForSeconds(1f);
+            mainText.text = "1";
+            beep.Play();
+            yield return new WaitForSeconds(1f);
+            mainText.text = " ";
+            ball.GetComponent<BallScript>().RandomDirection(); //Send ball in random direction
+        }
     }
 
     /// <summary>
@@ -96,5 +114,25 @@ public class GameManager : MonoBehaviour
         ball.GetComponent<BallScript>().ResetBall(); //Reset ball position
         PaddleL.GetComponent<PlayerScript>().ResetPaddle(); //Reset paddleL position
         PaddleR.GetComponent<PlayerScript>().ResetPaddle(); //Reset paddleR position
+    }
+
+    public void WinCondition() {
+        if (LScore >= 2) { //Checking if score is greater than 2
+            Won = true; //Set win to true
+        } else if (RScore >= 2) {
+            Won = true; //Set win to true
+        }
+
+        if (LScore >= 3) { //Win Text
+            mainText.text = "YELLOW WINS"; //Change text
+            mainText.color = yellow; //Change text color
+            subText.text = "[SHIFT] TO RESTART"; //Change subtext
+            subText.color = yellow; //Change subtext color
+        } else if (RScore >= 3) {
+            mainText.text = "PURPLE WINS"; //Change text
+            mainText.color = purple; //Change text color
+            subText.text = "[SHIFT] TO RESTART"; // Change subtext
+            subText.color = purple; //Change subtext color
+        }
     }
 }
